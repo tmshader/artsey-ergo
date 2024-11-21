@@ -9,7 +9,7 @@ A 3D printable ergonomic wireless Artsey-based keyboard running ZMK.
 - Slightly modified Artsey 9.0.0 layout
 - 128x32 OLED display for layers, battery status, time and other fun stuff
 
-## Try and modify the project
+## Try or modify the project
 
 Modify `ergogen/config.yaml` or use the provided config.
 

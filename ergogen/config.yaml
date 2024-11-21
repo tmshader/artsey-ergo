@@ -81,13 +81,13 @@ outlines:
   display:
     - what: rectangle
       where: matrix_index_top
-      adjust.shift: [cx, -cx/2 + 3]
+      adjust.shift: [cx + 1, -cx/2 + 3]
       size: [12.1, 39]
 
   display_1:
     - what: rectangle
       where: matrix_index_top
-      adjust.shift: [cx, -cx/2 + 3]
+      adjust.shift: [cx + 1, -cx/2 + 3]
       size: [12.1+1, 39+1]
 
   keys:
@@ -126,13 +126,13 @@ outlines:
   pcb_raw:
     - what: outline
       name: board
-      expand: 2.8
+      expand: 1
       joints: 1
 
   pcb:
     - what: outline
       name: pcb_raw
-      fillet: 2
+      fillet: 2.8
 
   cad_raw:
     - what: outline
@@ -241,7 +241,7 @@ pcbs:
         what: ceoloide/mcu_nice_nano
         where:
           ref: matrix_index_top
-          shift: [cx + 1, 2.85]
+          shift: [cx + 1, 1.8]
         params:
           reversible: true
           reverse_mount: true
