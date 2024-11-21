@@ -1,3 +1,5 @@
+![Artsey Ergo](https://raw.githubusercontent.com/tmshader/artsey-ergo/refs/heads/main/images/cover.png)
+
 # Artsey Ergo
 A 3D printable ergonomic wireless Artsey-based keyboard running ZMK.
 
