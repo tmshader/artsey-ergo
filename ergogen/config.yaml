@@ -1,0 +1,339 @@
+meta:
+  engine: 4.1.0
+  version: 0.0.1
+  author: TMShader
+
+units:
+  keycap: 17
+  stagger_unit: cx/3
+  #stagger_unit: cx/8
+
+  orig: cx/2
+
+  # Sheet size: 420x297
+  centerShiftX: -2cx
+  centerShiftY: -cx
+
+  sheetShiftX: 420/2
+  sheetShiftY: -(297/2)
+
+points:
+  key:
+    padding: cx
+    spread: cx
+    width: keycap
+    height: keycap
+  zones:
+    matrix:
+      columns:
+        pinky:
+          # key.column_net: COL1
+          rows.home:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: led_matrix_ring_home
+          rows.top:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: led_matrix_pinky_home
+        ring:
+          key:
+            stagger: stagger_unit*2
+            # column_net: COL2
+          rows.home:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: led_matrix_middle_home
+          rows.top:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: led_matrix_pinky_top
+        middle:
+          key:
+            stagger: stagger_unit
+            # column_net: COL3
+          rows.home:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: led_matrix_index_home
+          rows.top:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: led_matrix_ring_top
+        index:
+          key:
+            stagger: -stagger_unit
+            # column_net: COL4
+          rows.home:
+            net: "key_{{name}}"
+            led_in: "led_{{name}}"
+            led_out: x
+          rows.top:
+            net: "key_{{name}}"
+            led_in: LED_DIN
+            led_out: led_matrix_middle_top
+      # rows:
+      #   home.row_net: ROW2
+      #   top.row_net: ROW1
+      anchor.shift: [centerShiftX + sheetShiftX, centerShiftY + sheetShiftY]
+
+outlines:
+  display:
+    - what: rectangle
+      where: matrix_index_top
+      adjust.shift: [cx, -cx/2 + 3]
+      size: [12.1, 39]
+
+  display_1:
+    - what: rectangle
+      where: matrix_index_top
+      adjust.shift: [cx, -cx/2 + 3]
+      size: [12.1+1, 39+1]
+
+  keys:
+    - what: rectangle
+      where: true
+      size: [keycap, keycap]
+      fillet: 2
+    - what: outline
+      name: display
+      operation: stack
+      fillet: 1
+
+  board:
+    - what: rectangle
+      where: true
+      size: [cx, cx]
+    - what: rectangle
+      where: /^matrix_index_.*$/
+      size: [cx, cx]
+      adjust.shift: [cx, 0]
+    - what: rectangle
+      where: matrix_middle_top
+      size: [cx, cx]
+      adjust.shift: [cx, 0]
+    - what: rectangle
+      where: matrix_middle_home
+      size: [cx, cx]
+      adjust.shift: [0, -stagger_unit]
+    - what: rectangle
+      where: matrix_index_top
+      size: [cx, cx]
+      adjust.shift: [cx, stagger_unit]
+      expand: (cx-keycap)/2
+      joints: 1
+
+  pcb_raw:
+    - what: outline
+      name: board
+      expand: 2.8
+      joints: 1
+
+  pcb:
+    - what: outline
+      name: pcb_raw
+      fillet: 2
+
+  cad_raw:
+    - what: outline
+      name: board
+      expand: 5
+      joints: 1
+    - what: rectangle
+      where: true
+      size: [14, 14]
+      operation: stack
+    - what: outline
+      name: display_1
+      operation: stack
+    - what: outline
+      name: board
+      operation: stack
+
+  cad:
+    raw:
+      name: cad_raw
+      adjust.shift: [-sheetShiftX, -sheetShiftY]
+    hole1: &cad_hole_params
+      what: circle
+      radius: 3/2
+      adjust.shift: [-sheetShiftX, -sheetShiftY]
+      where: &hole1
+        ref: matrix_pinky_top
+        shift: [cx/2 - 0.5, -cx/2]
+    hole2:
+      <<: *cad_hole_params
+      where: &hole2
+        ref: matrix_middle_top
+        shift: [cx/2 - 0.5, -cx/2]
+
+pcbs:
+  artsey_ergo: &pcb_params
+    template: kicad8
+    outlines:
+      main:
+        outline: pcb
+      case:
+        outline: cad_raw
+        layer: Dwgs.User
+      display:
+        outline: display
+        layer: Dwgs.User
+    footprints:
+      keys:
+        # what: ceoloide/switch_mx
+        #what: ceoloide/switch_gateron_ks27_ks33
+        what: ceoloide/switch_choc_v1_v2
+        where: true
+        params:
+          hotswap: true
+          solder: false
+          reversible: true
+          choc_v2_support: false
+          # include_plated_holes: true
+          include_choc_v1_led_cutout_marks: true
+          # from: "{{column_net}}"
+          from: "{{net}}"
+          # to: "{{colrow}}"
+          to: "GND"
+          switch_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Choc.3dshapes/Choc_V1.step"
+          switch_3dmodel_xyz_offset: [0, 0, -1.6]
+          switch_3dmodel_xyz_rotation: [0, 180, 180]
+          hotswap_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Hotswap.3dshapes/Choc_V1.step"
+          hotswap_3dmodel_xyz_offset: [0, 0, -1.65]
+          hotswap_3dmodel_xyz_rotation: [0, 180, 180]
+          keycap_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_CAD.3dshapes/Choc_1.00u_CAD.step"
+          keycap_3dmodel_xyz_offset: [0, 0, -11.7]
+          keycap_3dmodel_xyz_rotation: [0, 0, 90]
+      # diode:
+      #   what: ceoloide/diode_tht_sod123
+      #   where: true
+      #   params:
+      #     from: "{{colrow}}"
+      #     to: "{{row_net}}"
+      #     reversible: true
+      #     diode_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Components.3dshapes/Diode_SOD-123.step"
+      #   adjust:
+      #     shift: [7.65, -0.9]
+      #     rotate: 90
+      led: &led_params
+        what: ceoloide/led_sk6812mini-e
+        where: /^matrix_.*_home$/
+        params:
+          P2: "{{led_out}}"
+          P4: "{{led_in}}"
+          reversible: true
+          signal_trace_width: 0.2
+          gnd_trace_width: 0.2
+          vcc_trace_width: 0.3
+          via_size: 0.6
+          via_drill: 0.3
+          led_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Components.3dshapes/LED_SK6812MINI.step"
+          led_3dmodel_xyz_rotation: [90, 0, 180]
+        adjust:
+          shift: [0, -4.7]
+      led-180:
+        <<: *led_params
+        where: /^matrix_.*_top$/
+        adjust.rotate: 180
+
+      nice_nano:
+        what: ceoloide/mcu_nice_nano
+        where:
+          ref: matrix_index_top
+          shift: [cx + 1, 2.85]
+        params:
+          reversible: true
+          reverse_mount: true
+          mcu_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_MCU.3dshapes/Nice_Nano_V2_Flipped.step"
+          mcu_3dmodel_xyz_offset: [0, 0, -4.2]
+          mcu_3dmodel_xyz_rotation: [0, 180, 0]
+          P2: OLED_SDA
+          P3: OLED_SCL
+
+          P4: ROW1
+          P5: ROW2
+
+          P21: LED_DIN
+
+          P18: COL4
+          P15: COL3
+          P14: COL2
+          P16: COL1
+
+          P2_label: P2
+          P3_label: P3
+          P4_label: P4
+          P5_label: P5
+          P14_label: P14
+          P15_label: P15
+          P16_label: P16
+          P18_label: P18
+          P21_label: P21
+
+      display:
+        what: ceoloide/display_ssd1306
+        where:
+          ref: matrix_index_top
+          shift: [cx + 1, -cx/2 + 2]
+        params:
+          include_labels: true
+          reversible: true
+          invert_jumpers_position: false
+          SDA: OLED_SDA
+          SCL: OLED_SCL
+          display_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Components.3dshapes/OLED_128x32.step"
+          display_3dmodel_xyz_rotation: [0, 0, -90]
+          display_3dmodel_xyz_offset: [0, 0.8, 2.6]
+      battery:
+        what: ceoloide/battery_connector_jst_ph_2
+        where:
+          ref: matrix_index_top
+          shift: [6, 11.5]
+          rotate: -90
+        params:
+          side: B
+          reversible: true
+          connector_3dmodel_filename: "${KICAD8_3DMODEL_DIR}/Connector_JST.3dshapes/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.wrl"
+          connector_3dmodel_xyz_rotation: [0, 0, -180]
+          connector_3dmodel_xyz_offset: [1, 0, 0]
+      power:
+        what: ceoloide/power_switch_smd_side
+        where:
+          ref: matrix_index_top
+          shift: [5.1, 17.2]
+        params:
+          side: F
+          invert_behavior: true
+          reversible: true
+          include_silkscreen: false
+          switch_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Components.3dshapes/Switch_MSK12C02.step"
+          switch_3dmodel_xyz_rotation: [0, 0, 90]
+        adjust:
+          rotate: 90
+      reset:
+        what: ceoloide/reset_switch_smd_side
+        where:
+          ref: matrix_index_top
+          shift: [-5.1, 17.2]
+        params:
+          side: F
+          reversible: true
+          include_bosses: true
+
+      fill_zone:
+        what: ceoloide/utility_filled_zone
+        params:
+          side: "F&B"
+          corner_smoothing: fillet
+
+      mounting_hole-1:
+        what: ceoloide/mounting_hole_npth
+        where: *hole1
+        params: &hole_params
+          hole_size: 5.0
+          hole_drill: 5.0
+      mounting_hole-2:
+        what: ceoloide/mounting_hole_npth
+        where: *hole2
+        params: *hole_params
