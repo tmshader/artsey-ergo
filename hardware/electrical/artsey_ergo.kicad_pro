@@ -48,11 +48,16 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.0
+          "min_clearance": 0.4
         }
       },
       "diff_pair_dimensions": [],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "clearance|207816000|159500000|811358bf-a839-4274-b248-14430bbe0fdf|ac61b4ad-7f1d-4b88-a3c7-7aff769c8214",
+        "clearance|207816000|159500000|9ee2fe2c-2e06-4491-a5c5-100641315b93|e2eaebb2-c562-437f-b48e-6257bf01fa38",
+        "clearance|207816000|161500000|1522f411-6df3-4407-9c28-0a39b6d98a4d|f920c7a0-7a5a-4f9b-8736-4bcb8133c926",
+        "clearance|207816000|161500000|abce41e7-7494-4c3d-a5bb-445d0f6475e3|e6659586-96d6-4221-8615-073e9139bc0b"
+      ],
       "meta": {
         "version": 2
       },
