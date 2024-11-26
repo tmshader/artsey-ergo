@@ -1,12 +1,11 @@
 meta:
   engine: 4.1.0
-  version: 0.0.1
+  version: 1.0.0
   author: TMShader
 
 units:
   keycap: 17
   stagger_unit: cx/3
-  #stagger_unit: cx/8
 
   orig: cx/2
 
@@ -37,7 +36,6 @@ points:
     matrix:
       columns:
         pinky:
-          # key.column_net: COL1
           rows.home:
             net: "key_{{name}}"
             led_in: "led_{{name}}"
@@ -47,9 +45,7 @@ points:
             led_in: "led_{{name}}"
             led_out: led_matrix_pinky_home
         ring:
-          key:
-            stagger: stagger_unit*2
-            # column_net: COL2
+          key.stagger: stagger_unit*2
           rows.home:
             net: "key_{{name}}"
             led_in: "led_{{name}}"
@@ -59,9 +55,7 @@ points:
             led_in: "led_{{name}}"
             led_out: led_matrix_pinky_top
         middle:
-          key:
-            stagger: stagger_unit
-            # column_net: COL3
+          key.stagger: stagger_unit
           rows.home:
             net: "key_{{name}}"
             led_in: "led_{{name}}"
@@ -71,9 +65,7 @@ points:
             led_in: "led_{{name}}"
             led_out: led_matrix_ring_top
         index:
-          key:
-            stagger: -stagger_unit
-            # column_net: COL4
+          key.stagger: -stagger_unit
           rows.home:
             net: "key_{{name}}"
             led_in: "led_{{name}}"
@@ -82,9 +74,6 @@ points:
             net: "key_{{name}}"
             led_in: LED_DIN
             led_out: led_matrix_middle_top
-      # rows:
-      #   home.row_net: ROW2
-      #   top.row_net: ROW1
       anchor.shift: [centerShiftX + sheetShiftX, centerShiftY + sheetShiftY]
 
 outlines:
@@ -195,21 +184,16 @@ pcbs:
         layer: Dwgs.User
     footprints:
       keys:
-        # what: ceoloide/switch_mx
-        #what: ceoloide/switch_gateron_ks27_ks33
         what: ceoloide/switch_choc_v1_v2
         where: true
         params:
           hotswap: true
-          solder: false
           reversible: true
           choc_v2_support: false
-          # include_plated_holes: true
-          include_choc_v1_led_cutout_marks: true
-          # from: "{{column_net}}"
-          from: "{{net}}"
-          # to: "{{colrow}}"
-          to: "GND"
+          include_plated_holes: true
+          include_choc_v1_led_cutout_marks: false
+          from: "GND"
+          to: "{{net}}"
           switch_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Choc.3dshapes/Choc_V1.step"
           switch_3dmodel_xyz_offset: [0, 0, -1.6]
           switch_3dmodel_xyz_rotation: [0, 180, 180]
@@ -219,17 +203,7 @@ pcbs:
           keycap_3dmodel_filename: "../models/Choc_1.00u_CAD_MONO.step"
           keycap_3dmodel_xyz_offset: [0, 0, -11.7]
           keycap_3dmodel_xyz_rotation: [0, 0, 90]
-      # diode:
-      #   what: ceoloide/diode_tht_sod123
-      #   where: true
-      #   params:
-      #     from: "{{colrow}}"
-      #     to: "{{row_net}}"
-      #     reversible: true
-      #     diode_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Components.3dshapes/Diode_SOD-123.step"
-      #   adjust:
-      #     shift: [7.65, -0.9]
-      #     rotate: 90
+
       led: &led_params
         what: ceoloide/led_sk6812mini-e
         where: /^matrix_.*_home$/
@@ -256,46 +230,51 @@ pcbs:
         where:
           ref: matrix_index_home
           shift: [dpX - 1.2, dpY + 6.8]
-          #shift: [cx + 1, 1.8]
         params:
           reversible: true
           reverse_mount: true
+          show_via_labels: false
+          show_silk_labels: false
+          show_silk_labels_on_both_sides: false
+          show_instructions: false
+          only_required_jumpers: true
           mcu_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_MCU.3dshapes/Nice_Nano_V2_Flipped.step"
           mcu_3dmodel_xyz_offset: [0, 0, -4.2]
           mcu_3dmodel_xyz_rotation: [0, 180, 0]
+
           P2: OLED_SDA
           P3: OLED_SCL
 
-          P4: key_matrix_index_top
-          P19: key_matrix_middle_top
-          P5: key_matrix_ring_top
+          P21: key_matrix_middle_top
+          P20: key_matrix_index_top
+          P19: key_matrix_ring_top
           P18: key_matrix_pinky_top
 
-          P6: key_matrix_pinky_home
-          P15: key_matrix_ring_home
-          P7: key_matrix_middle_home
-          P14: key_matrix_index_home
+          P15: key_matrix_middle_home
+          P14: key_matrix_ring_home
+          P16: key_matrix_pinky_home
+          P10: key_matrix_index_home
 
-          P8: LED_DIN
+          P5: LED_DIN
 
           P2_label: P2
           P3_label: P3
-          P4_label: P4
           P5_label: P5
-          P6_label: P6
-          P7_label: P7
-          P8_label: P8
+
+          P10_label: P10
           P14_label: P14
           P15_label: P15
+          P16_label: P16
           P18_label: P18
           P19_label: P19
+          P20_label: P20
+          P21_label: P21
 
       display:
         what: ceoloide/display_ssd1306
         where:
           ref: matrix_index_home
           shift: [dpX, dpY - 0.8]
-          # shift: [cx + 1, -cx/2 + 2]
         params:
           include_labels: false
           reversible: true
@@ -305,6 +284,7 @@ pcbs:
           display_3dmodel_filename: "${SCOTTOKEEBS_KICAD}/3dmodels/ScottoKeebs_Components.3dshapes/OLED_128x32.step"
           display_3dmodel_xyz_rotation: [0, 0, -90]
           display_3dmodel_xyz_offset: [0, 0.8, 4.5]
+
       battery:
         what: ceoloide/battery_connector_jst_ph_2
         where:
@@ -317,6 +297,7 @@ pcbs:
           connector_3dmodel_filename: "${KICAD8_3DMODEL_DIR}/Connector_JST.3dshapes/JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal.wrl"
           connector_3dmodel_xyz_rotation: [0, 0, -180]
           connector_3dmodel_xyz_offset: [1, 0, 0]
+
       power:
         what: ceoloide/power_switch_smd_side
         where:
@@ -345,6 +326,7 @@ pcbs:
       power_hole-2:
         <<: *power_hole_params
         where.shift: [10.2 + 8, -9]
+
       reset:
         what: ceoloide/reset_switch_smd_side
         where:

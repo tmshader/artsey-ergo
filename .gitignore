@@ -32,8 +32,4 @@ fp-info-cache
 
 # Ergogen outputs
 outlines/
-
-#TEMPORARY
 pcbs/
-pcbs_old/
-ergogen/config_old.yaml
