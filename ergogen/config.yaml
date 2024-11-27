@@ -242,6 +242,8 @@ pcbs:
           mcu_3dmodel_xyz_offset: [0, 0, -4.2]
           mcu_3dmodel_xyz_rotation: [0, 180, 0]
 
+          P1: LED_DIN
+
           P2: OLED_SDA
           P3: OLED_SCL
 
@@ -255,11 +257,9 @@ pcbs:
           P16: key_matrix_pinky_home
           P10: key_matrix_index_home
 
-          P5: LED_DIN
-
+          P1_label: P1
           P2_label: P2
           P3_label: P3
-          P5_label: P5
 
           P10_label: P10
           P14_label: P14
