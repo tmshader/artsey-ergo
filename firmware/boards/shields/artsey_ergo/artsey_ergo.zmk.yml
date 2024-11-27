@@ -1,0 +1,17 @@
+file_format: "1"
+id: artsey_ergo
+name: Artsey Ergo
+type: shield
+url: https://github.com/tmshader/artsey-ergo/
+requires:
+  - pro_micro
+exposes:
+  - i2c_oled
+features:
+  - keys
+  - studio
+  - display
+  - underglow
+siblings:
+  - artsey_ergo_left
+  - artsey_ergo_right

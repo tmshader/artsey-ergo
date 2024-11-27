@@ -1,0 +1,52 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <physical_layouts.dtsi>
+
+/ {
+	chosen {
+		zephyr,display = &oled;
+		zmk,physical-layout = &default_layout;
+	};
+
+	kscan0: kscan {
+		compatible = "zmk,kscan-gpio-direct";
+		wakeup-source;
+	};
+
+	default_transform: keymap_transform0 {
+		compatible = "zmk,matrix-transform";
+		rows = <2>;
+		columns = <4>;
+	};
+
+	default_layout: default_layout {
+		compatible = "zmk,physical-layout";
+		display-name = "Artsey Ergo";
+		transform = <&default_transform>;
+		kscan = <&kscan0>;
+	};
+
+	default_position_map: default_position_map {
+        compatible = "zmk,physical-layout-position-map";
+        complete;
+	};
+};
+
+&pro_micro_i2c {
+	status = "okay";
+
+	oled: ssd1306@3c {
+		compatible = "solomon,ssd1306fb";
+		reg = <0x3c>;
+		width = <128>;
+        height = <32>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <31>;
+        segment-remap;
+        com-invdir;
+        com-sequential;
+        inversion-on;
+        prechargep = <0x22>;
+	};
+};

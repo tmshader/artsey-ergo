@@ -1,0 +1,42 @@
+#include "artsey_ergo.dtsi"
+
+&kscan0 {
+	input-gpios =
+		<&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+		<&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+		<&pro_micro 21 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+		<&pro_micro 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+
+		<&pro_micro  8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+		<&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+		<&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>,
+		<&pro_micro  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+};
+
+&default_layout {
+	keys = //					  w	  h		  x	  y		rot		rx	ry
+		<&key_physical_attrs	100	100		  0  33		  0		 0	 0>,
+		<&key_physical_attrs	100	100		100   0		  0		 0	 0>,
+		<&key_physical_attrs	100	100		200  33		  0		 0	 0>,
+		<&key_physical_attrs	100	100		300  66		  0		 0	 0>,
+		<&key_physical_attrs	100	100		  0 133		  0		 0	 0>,
+		<&key_physical_attrs	100	100		100 100		  0		 0	 0>,
+		<&key_physical_attrs	100	100		200 133		  0		 0	 0>,
+		<&key_physical_attrs	100	100		300 166		  0		 0	 0>;
+};
+
+&default_transform {
+	map = <
+		RC(0,0) RC(0,1) RC(0,2) RC(0,3)
+		RC(0,4) RC(0,5) RC(0,6) RC(0,7)
+	>;
+};
+
+&default_position_map {
+	layout1: layout1 {
+		physical-layout = <&default_layout>;
+		positions =
+			<0 1 2 3>,
+			<4 5 6 7>;
+	};
+};
