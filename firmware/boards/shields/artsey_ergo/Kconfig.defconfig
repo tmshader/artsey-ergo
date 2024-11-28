@@ -1,7 +1,25 @@
+config ARTSEY_SPLIT
+    bool "Use split keyboard mode"
+    default n
+
+if ARTSEY_SPLIT && SHIELD_ARTSEY_ERGO_LEFT
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
 if SHIELD_ARTSEY_ERGO_LEFT || SHIELD_ARTSEY_ERGO_RIGHT
 
 config ZMK_KEYBOARD_NAME
 	default "Artsey Ergo"
+
+if ARTSEY_SPLIT
+
+config ZMK_SPLIT
+    default y
+
+endif # ARTSEY_SPLIT
 
 if ZMK_DISPLAY
 
