@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Artsey_Ergo")(type "KiCad")(uri "${KIPRJMOD}/Lib/Artsey_Ergo.kicad_sym")(options "")(descr ""))
+)

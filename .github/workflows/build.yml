@@ -1,4 +1,15 @@
-on: [push, pull_request, workflow_dispatch]
+name: "ZMK Firmware Build"
+
+on:
+  push:
+    paths:
+      - 'firmware/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    paths:
+      - 'firmware/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
 
 jobs:
   build:
