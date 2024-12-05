@@ -6,7 +6,8 @@ layout: home
 ![Image]({{ "/images/artsey_ergo-3D_blender_angled.png" | absolute_url | append: cacheBust }})
 
 [![ZMK Build](https://github.com/tmshader/artsey-ergo/actions/workflows/build.yml/badge.svg)](https://github.com/tmshader/artsey-ergo/actions/workflows/build.yml)
-[![Pages Build](https://github.com/tmshader/artsey-ergo/actions/workflows/build.yml/badge.svg)](https://github.com/tmshader/artsey-ergo/actions/workflows/build.yml)
+
+[![Pages Build](https://github.com/tmshader/artsey-ergo/actions/workflows/kibot.yml/badge.svg)](https://github.com/tmshader/artsey-ergo/actions/workflows/kibot.yml)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/tmshader/artsey-ergo?link=https%3A%2F%2Fgithub.com%2Ftmshader%2Fartsey-ergo)
 

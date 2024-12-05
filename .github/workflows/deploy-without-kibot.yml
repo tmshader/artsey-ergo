@@ -1,0 +1,97 @@
+name: "Deploy without KiBot"
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artsey_ergo
+          path: output
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.run_id }}
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          path: output
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.run_id }}
+
+      - name: Move artifact files
+        run: |
+          ls -l
+          ls -l output
+          ls -l output/render_angled
+          ls -l output/report
+          find output/report
+          mkdir export
+          mkdir html
+          mkdir images
+          mkdir documents
+          mv output/drc_validation.md ./
+          mv output/erc_validation.md ./
+          mv output/step/Step/artsey_ergo-3D.step ./artsey_ergo-3D.step
+          mv output/report/report/artsey_ergo-report.txt ./artsey_ergo-report.md
+          mv output/render_top/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_top.png
+          mv output/render_bottom/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_bottom.png
+          mv output/render_angled/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_angled.png
+          mv output/report/IBOM/artsey_ergo-ibom.html export/artsey_ergo-ibom.html
+          mv output/report/BOM/artsey_ergo_bom.html export/artsey_ergo-bom.html
+          mv output/report/Schematic/artsey_ergo-schematic-default.pdf documents/artsey_ergo-schematic-default.pdf
+          mv output/report/Schematic/artsey_ergo-schematic-mono.pdf documents/artsey_ergo-schematic-mono.pdf
+          mv output/report/JLCPCB/artsey_ergo-JLCPCB.zip export/artsey_ergo-JLCPCB.zip
+          mv output/report/JLCPCB/BOM/artsey_ergo_bom_jlc.csv export/artsey_ergo_bom_jlc.csv
+          mv output/report/JLCPCB/PickAndPlace/artsey_ergo_cpl_jlc.csv export/artsey_ergo_cpl_jlc.csv
+          cp export/artsey_ergo-JLCPCB.zip export/artsey_ergo-Eurocircuits.zip
+          rm -rf output
+          ls -l
+          ls -l export
+          find .
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+          future: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
