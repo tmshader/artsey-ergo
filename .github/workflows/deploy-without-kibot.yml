@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          sparse-checkout: .
+          sparse-checkout: _includes
 
       - name: Download artifact
         uses: actions/download-artifact@v4
