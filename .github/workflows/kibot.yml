@@ -1,0 +1,307 @@
+name: "KiBot Build"
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    paths:
+      - '**.kicad_sch'
+      - '**.kicad_pcb'
+      - '.github/workflows/kibot.yml'
+  pull_request:
+    paths:
+      - '**.kicad_sch'
+      - '**.kicad_pcb'
+      - '.github/workflows/kibot.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/preflight.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: "Setup jq"
+        uses: dcarbone/install-jq-action@v3
+
+      - name: Parse ERC
+        run: |
+          erc_warnings=$(cat output/artsey_ergo-erc.json | jq '[try .violations[] | select(.severity == "warning")] | length')
+          erc_errors=$(cat output/artsey_ergo-erc.json | jq '[try .violations[] | select(.severity == "error")] | length')
+          cat <<EOF > output/erc_validation.md
+          - **Errors**: $erc_errors
+          - **Warnings**: $erc_warnings
+          - **Link**: [HTML Report](output/artsey_ergo-erc.html)
+          EOF
+          cat output/erc_validation.md
+
+      - name: Parse DRC
+        run: |
+          drc_warnings=$(cat output/artsey_ergo-drc.json | jq '[try .violations[] | select(.severity == "warning")] | length')
+          drc_errors=$(cat output/artsey_ergo-drc.json | jq '[try .violations[] | select(.severity == "error")] | length')
+          cat <<EOF > output/drc_validation.md
+          - **Errors**: $drc_errors
+          - **Warnings**: $drc_warnings
+          - **Link**: [HTML Report](output/artsey_ergo-drc.html)
+          EOF
+          cat output/drc_validation.md
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artsey_ergo
+          path: output
+
+  render_angled:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/render_angled.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: render_angled
+          path: output
+
+  report:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/config.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: output
+
+  render_top:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/render_top.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: render_top
+          path: output
+
+  render_bottom:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/render_bottom.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: render_bottom
+          path: output
+
+  step:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/step.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: step
+          path: output
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [
+      preflight,
+      render_angled,
+      report,
+      render_top,
+      render_bottom,
+      step
+    ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artsey_ergo
+          path: output
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          path: output
+
+      - name: Move artifact files
+        run: |
+          ls -l
+          ls -l output
+          ls -l output/render_angled
+          ls -l output/report
+          find output/report
+          mkdir export
+          mkdir html
+          mkdir images
+          mkdir documents
+          mv output/drc_validation.md ./
+          mv output/erc_validation.md ./
+          mv output/step/Step/artsey_ergo-3D.step ./artsey_ergo-3D.step
+          mv output/report/report/artsey_ergo-report.txt ./artsey_ergo-report.md
+          mv output/render_top/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_top.png
+          mv output/render_bottom/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_bottom.png
+          mv output/render_angled/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_angled.png
+          mv output/report/IBOM/artsey_ergo-ibom.html export/artsey_ergo-ibom.html
+          mv output/report/BOM/artsey_ergo_bom.html export/artsey_ergo-bom.html
+          mv output/report/Schematic/artsey_ergo-schematic-default.pdf documents/artsey_ergo-schematic-default.pdf
+          mv output/report/Schematic/artsey_ergo-schematic-mono.pdf documents/artsey_ergo-schematic-mono.pdf
+          mv output/report/JLCPCB/artsey_ergo-JLCPCB.zip export/artsey_ergo-JLCPCB.zip
+          mv output/report/JLCPCB/BOM/artsey_ergo_bom_jlc.csv export/artsey_ergo_bom_jlc.csv
+          mv output/report/JLCPCB/PickAndPlace/artsey_ergo_cpl_jlc.csv export/artsey_ergo_cpl_jlc.csv
+          cp export/artsey_ergo-JLCPCB.zip export/artsey_ergo-Eurocircuits.zip
+          rm -rf output
+          ls -l
+          ls -l export
+          find .
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+          future: true
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

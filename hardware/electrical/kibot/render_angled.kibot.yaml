@@ -1,0 +1,93 @@
+kibot:
+  version: 1
+
+globals:
+  resources_dir: resources
+  solder_mask_color: blue
+  pcb_finish: ENIG
+
+outputs:
+  - name: _blender_3d_top_angled
+    comment: "HQ 3D Render of the PCB"
+    type: blender_export
+    options:
+      light:
+        - name: "light1"
+          energy: 3
+          pos_x: -size*3.33
+          pos_y: size*3.33
+          pos_z: size*5
+          type: "AREA"
+
+        - name: "light2"
+          energy: 4
+          pos_x: 0
+          pos_y: size*3.33
+          pos_z: size*7
+          type: "AREA"
+
+        - name: "light3"
+          energy: 4
+          pos_x: 0
+          pos_y: 0
+          pos_z: size*12
+          type: "AREA"
+
+        - name: "light4"
+          energy: 5
+          pos_x: -size*3.33
+          pos_y: size*3.33
+          pos_z: size*10.0
+          type: "AREA"
+
+        - name: "light5"
+          energy: 5
+          pos_x: 0.0
+          pos_y: 0.0
+          pos_z: size*30.0
+          type: "SUN"
+
+        - name: "light6"
+          energy: 5
+          pos_x: -size*3.33
+          pos_y: size*3.33
+          pos_z: size*10.0
+          type: "SPOT"
+
+        - name: "light7"
+          energy: 4
+          pos_x: -size*3.33
+          pos_y: size*3.33
+          pos_z: 0.0
+          type: "AREA"
+
+        - name: "light8"
+          energy: 3
+          pos_x: 0.0
+          pos_y: 0.0
+          pos_z: 0.0
+          type: "SUN"
+
+        - name: "light9"
+          energy: 5
+          pos_x: -size*3.33
+          pos_y: size*3.33
+          pos_z: 0.0
+          type: "AREA"
+      pcb3d:
+        download: false
+        download_lcsc: false
+      render_options:
+        auto_crop: true
+        transparent_background: true
+        samples: 100
+        resolution_x: 2048
+        resolution_y: 2048
+      auto_camera_z_axis_factor: 1.0
+      point_of_view:
+        rotate_x: 15
+        rotate_y: 10
+        rotate_z: 0
+        view: top
+      outputs:
+        - type: render

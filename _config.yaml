@@ -1,0 +1,34 @@
+title: Artsey Ergo
+author: TMShader
+url: https://artsey-ergo.tmshader.me
+description: >
+  A 3D printable ergonomic wireless Artsey-based keyboard running ZMK.
+
+permalink: /:slug
+
+remote_theme: abhinavs/moonwalk
+
+theme_config:
+  appearance: "dark"
+  appearance_toggle: true
+  back_home_text: "home.."
+  date_format: "%Y-%m-%d"
+  show_description: false
+  show_navbar: true
+  show_footer: true
+  show_copyright: true
+  show_projects: false
+  show_blog: false
+  show_old_projects: false
+  show_misc_list: false
+  show_reading_time: false
+  show_tags: false
+
+highlighter: rouge
+
+sass:
+  style: :compressed
+
+plugins:
+  - jekyll-feed
+  - jemoji

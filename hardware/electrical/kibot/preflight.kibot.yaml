@@ -1,0 +1,14 @@
+kibot:
+  version: 1
+
+globals:
+  resources_dir: resources
+
+preflight:
+  check_zone_fills: true
+  drc:
+    dont_stop: true
+    format: "JSON,HTML,CSV"
+  erc:
+    dont_stop: true
+    format: "JSON,HTML,CSV"
