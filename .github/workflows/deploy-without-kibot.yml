@@ -29,14 +29,6 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: artsey_ergo
-          path: output
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ inputs.run_id }}
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
           path: output
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ inputs.run_id }}
@@ -66,11 +58,21 @@ jobs:
           mv output/report/JLCPCB/artsey_ergo-JLCPCB.zip export/artsey_ergo-JLCPCB.zip
           mv output/report/JLCPCB/BOM/artsey_ergo_bom_jlc.csv export/artsey_ergo_bom_jlc.csv
           mv output/report/JLCPCB/PickAndPlace/artsey_ergo_cpl_jlc.csv export/artsey_ergo_cpl_jlc.csv
-          cp export/artsey_ergo-JLCPCB.zip export/artsey_ergo-Eurocircuits.zip
+          mv output/jlcpcb/JLCPCB/artsey_ergo-panel-JLCPCB.zip export/artsey_ergo-panel-JLCPCB.zip
+          mv output/jlcpcb/JLCPCB/BOM/artsey_ergo_bom_jlc.csv export/artsey_ergo-panel_bom_jlc.csv
+          mv output/jlcpcb/JLCPCB/PickAndPlace/artsey_ergo-panel_cpl_jlc.csv export/artsey_ergo-panel_cpl_jlc.csv
           rm -rf output
           ls -l
           ls -l export
           find .
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artsey_ergo
+          path: output
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ inputs.run_id }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
