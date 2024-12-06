@@ -19,6 +19,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "pages"
@@ -79,7 +80,7 @@ jobs:
           name: artsey_ergo
           path: output
 
-  render_angled:
+  panelize:
     runs-on: ubuntu-latest
     container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
     steps:
@@ -97,10 +98,88 @@ jobs:
       - name: Run Kibot
         uses: INTI-CMNB/KiBot@v2_k8
         with:
+          config: "kibot/panelize.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "artsey_ergo.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: panelize
+          path: output/panelize
+
+  jlcpcb:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    needs: panelize
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: panelize
+          path: panelize
+
+      - name: Run Kibot
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
+          config: "kibot/jlcpcb.kibot.yaml"
+          dir: output
+          schema: "artsey_ergo.kicad_sch"
+          board: "panelize/artsey_ergo-panel.kicad_pcb"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: jlcpcb
+          path: output
+
+  render_angled:
+    runs-on: ubuntu-latest
+    container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
+    steps:
+      - name: Checkout
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: hardware/electrical
+          sparse-checkout-cone-mode: false
+
+      - name: Move files up
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
+        run: |
+          mv ./hardware/electrical/* .
+          rm -r hardware/
+
+      - name: Run Kibot
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
+        uses: INTI-CMNB/KiBot@v2_k8
+        with:
           config: "kibot/render_angled.kibot.yaml"
           dir: output
           schema: "artsey_ergo.kicad_sch"
           board: "artsey_ergo.kicad_pcb"
+
+      - name: Download Artifacts
+        if: ${{ vars.RENDER_ACTION_ID != '0' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: render_angled
+          path: output
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ vars.RENDER_ACTION_ID }}
+          repository: tmshader/artsey-ergo
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -142,23 +221,36 @@ jobs:
     container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
     steps:
       - name: Checkout
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
         uses: actions/checkout@v4
         with:
           sparse-checkout: hardware/electrical
           sparse-checkout-cone-mode: false
 
       - name: Move files up
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
         run: |
           mv ./hardware/electrical/* .
           rm -r hardware/
 
       - name: Run Kibot
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
         uses: INTI-CMNB/KiBot@v2_k8
         with:
           config: "kibot/render_top.kibot.yaml"
           dir: output
           schema: "artsey_ergo.kicad_sch"
           board: "artsey_ergo.kicad_pcb"
+
+      - name: Download Artifacts
+        if: ${{ vars.RENDER_ACTION_ID != '0' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: render_top
+          path: output
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ vars.RENDER_ACTION_ID }}
+          repository: tmshader/artsey-ergo
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -171,23 +263,36 @@ jobs:
     container: ghcr.io/inti-cmnb/kicad8_auto_full:latest
     steps:
       - name: Checkout
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
         uses: actions/checkout@v4
         with:
           sparse-checkout: hardware/electrical
           sparse-checkout-cone-mode: false
 
       - name: Move files up
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
         run: |
           mv ./hardware/electrical/* .
           rm -r hardware/
 
       - name: Run Kibot
+        if: ${{ vars.RENDER_ACTION_ID == '0' }}
         uses: INTI-CMNB/KiBot@v2_k8
         with:
           config: "kibot/render_bottom.kibot.yaml"
           dir: output
           schema: "artsey_ergo.kicad_sch"
           board: "artsey_ergo.kicad_pcb"
+
+      - name: Download Artifacts
+        if: ${{ vars.RENDER_ACTION_ID != '0' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: render_bottom
+          path: output
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ vars.RENDER_ACTION_ID }}
+          repository: tmshader/artsey-ergo
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -228,6 +333,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [
       preflight,
+      panelize,
+      jlcpcb,
       render_angled,
       report,
       render_top,
@@ -277,7 +384,9 @@ jobs:
           mv output/report/JLCPCB/artsey_ergo-JLCPCB.zip export/artsey_ergo-JLCPCB.zip
           mv output/report/JLCPCB/BOM/artsey_ergo_bom_jlc.csv export/artsey_ergo_bom_jlc.csv
           mv output/report/JLCPCB/PickAndPlace/artsey_ergo_cpl_jlc.csv export/artsey_ergo_cpl_jlc.csv
-          cp export/artsey_ergo-JLCPCB.zip export/artsey_ergo-Eurocircuits.zip
+          mv output/jlcpcb/JLCPCB/artsey_ergo-panel-JLCPCB.zip export/artsey_ergo-panel-JLCPCB.zip
+          mv output/jlcpcb/JLCPCB/BOM/artsey_ergo_bom_jlc.csv export/artsey_ergo-panel_bom_jlc.csv
+          mv output/jlcpcb/JLCPCB/PickAndPlace/artsey_ergo-panel_cpl_jlc.csv export/artsey_ergo-panel_cpl_jlc.csv
           rm -rf output
           ls -l
           ls -l export

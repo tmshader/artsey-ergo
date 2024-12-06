@@ -1,0 +1,59 @@
+{
+    "tabs": {
+        "type": "annotation"
+    },
+    "cuts": {
+        "type": "mousebites",
+        "prolong": "0.5mm",
+        "drill": "0.6mm",
+        "spacing": "0.8mm",
+        "offset": "-0.1mm"
+    },
+    "framing": {
+        "type": "railstb",
+        "vspace": "4mm",
+        "width": "8mm",
+        "fillet": "1mm"
+    },
+    "tooling": {
+        "type": "3hole",
+        "hoffset": "4mm",
+        "voffset": "4mm",
+        "size": "1.152mm"
+    },
+    "fiducials": {
+        "type": "3fid",
+        "hoffset": "8mm",
+        "voffset": "4mm",
+        "opening": "2mm"
+    },
+    "text": {
+        "type": "simple",
+        "width": "2.4mm",
+        "height": "2.4mm",
+        "thickness": "0.5mm",
+        "voffset": "4mm",
+        "text": "{boardTitle} - {boardRevision} - {boardDate}"
+    },
+    "text2": {
+        "type": "simple",
+        "width": "2.4mm",
+        "height": "2.4mm",
+        "thickness": "0.5mm",
+        "anchor": "mb",
+        "voffset": "-4mm",
+        "text": "created by {boardCompany}"
+    },
+    "copperfill": {
+        "type": "hatched",
+        "width": "0.4mm",
+        "spacing": "1.2mm"
+    },
+    "page": {
+        "anchor": "c",
+        "posy": "50%"
+    },
+    "post": {
+        "millradiusouter": "1mm"
+    }
+}

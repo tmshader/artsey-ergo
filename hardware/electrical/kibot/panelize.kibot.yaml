@@ -1,0 +1,16 @@
+kibot:
+  version: 1
+
+globals:
+  resources_dir: resources
+  field_lcsc_part: "LCSC"
+  solder_mask_color: blue
+  pcb_finish: ENIG
+
+outputs:
+  - name: "panelize"
+    comment: "Panelize PCB for assembly."
+    type: "panelize"
+    dir: "panelize"
+    options:
+      configs: "kibot/panelize.json"

@@ -23,40 +23,11 @@ variants:
     pre_transform: _rot_footprint_jlcpcb
 
 outputs:
-  - name: "report"
-    comment: "Generates a report about the design."
-    type: "report"
-    dir: "report"
-    options:
-      converted_output: "%f-%i%I%v.%x"
-      eurocircuits_class_target: "3B"
-      eurocircuits_reduce_holes: 0
-      template: "full"
-      do_convert: true
-      convert_to: "pdf"
-
-  - name: "pdf_sch_print_default"
-    type: "pdf_sch_print"
-    dir: "Schematic"
-    options:
-      all_pages: true
-      monochrome: false
-      output: "%f-%i%I%v-default.%x"
-      title: "Artsey Ergo - Schematic"
-  - name: "pdf_sch_print_mono"
-    type: "pdf_sch_print"
-    dir: "Schematic"
-    options:
-      all_pages: true
-      monochrome: true
-      output: "%f-%i%I%v-mono.%x"
-      title: "Artsey Ergo - Schematic"
-
   - name: JLCPCB_gerbers
     comment: Gerbers compatible with JLCPCB
     type: gerber
     dir: JLCPCB/Gerber
-    options: &gerber_options
+    options:
       exclude_edge_layer: true
       exclude_pads_from_silkscreen: true
       plot_sheet_reference: false
@@ -158,49 +129,3 @@ outputs:
         hide_pcb_info: true
         hide_stats_info: true
         quote_all: true
-
-  - name: ibom
-    comment: Interactive BOM
-    type: ibom
-    dir: IBOM
-    options:
-      dark_mode: true
-      name_format: "index"
-      include_tracks: true
-      show_fields: "Value,Footprint,Datasheet,LCSC"
-
-  - name: "Markdown components table"
-    comment: "All LCSC components in HTML"
-    type: bom
-    dir: BOM
-    options:
-      output: "%f_%i.%x"
-      exclude_filter: "only_jlc_parts"
-      columns:
-        - field: Value
-          name: Value
-        - field: References
-          name: Reference
-        - Footprint
-        # - field: MFN
-        #   name: "Manufacturer"
-        # - field: MPN
-        #   name: "Manufacturer Part Number"
-        - Datasheet
-        - Sheetpath
-        - field: "LCSC"
-          name: "LCSC #"
-        - field: "Quantity Per PCB"
-          name: "Quantity"
-      format: "HTML"
-      html:
-        datasheet_as_link: "Datasheet"
-        lcsc_link: true
-
-  - name: "Info"
-    comment: "Records information about the current run."
-    type: "info"
-    dir: "CI"
-    options:
-      environment: "names"
-      output: "%f-%i%I%v.%x"
