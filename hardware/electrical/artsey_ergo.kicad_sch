@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Artsey Ergo")
-		(date "2024-12-04")
+		(date "2024-12-07")
 		(rev "v1.0.0")
 		(company "TMShader")
 		(comment 9 "Artsey Ergo")
@@ -296,9 +296,10 @@
 			)
 		)
 		(property "Sheetfile" "block_diagram.kicad_sch"
-			(at 19.05 85.6746 0)
+			(at 19.05 86.36 0)
 			(effects
 				(font
+					(face "Lexend")
 					(size 1.27 1.27)
 				)
 				(justify left top)

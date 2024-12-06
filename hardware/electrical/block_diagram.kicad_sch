@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Artsey Ergo")
-		(date "2024-12-04")
+		(date "2024-12-07")
 		(rev "v1.0.0")
 		(company "TMShader")
 		(comment 9 "Artsey Ergo")
@@ -525,7 +525,6 @@
 	(sheet
 		(at 115.57 57.15)
 		(size 20.32 7.62)
-		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -535,23 +534,23 @@
 		)
 		(uuid "1d3fe100-7dfe-4337-8483-091e1ba524f3")
 		(property "Sheetname" "Battery"
-			(at 115.57 56.4384 0)
+			(at 115.57 55.88 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left)
 			)
 		)
 		(property "Sheetfile" "battery.kicad_sch"
-			(at 115.57 65.3546 0)
+			(at 115.57 66.04 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left top)
+				(justify left)
 			)
 		)
 		(pin "RAW" output
@@ -576,7 +575,6 @@
 	(sheet
 		(at 140.97 151.13)
 		(size 17.78 7.62)
-		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -586,23 +584,23 @@
 		)
 		(uuid "71a11289-8d29-4ddc-b2f7-16a8f56cf1f2")
 		(property "Sheetname" "Misc"
-			(at 140.97 150.4184 0)
+			(at 140.97 149.86 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left)
 			)
 		)
 		(property "Sheetfile" "misc.kicad_sch"
-			(at 140.97 159.3346 0)
+			(at 140.97 160.02 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left top)
+				(justify left)
 			)
 		)
 		(instances
@@ -616,7 +614,6 @@
 	(sheet
 		(at 115.57 113.03)
 		(size 20.32 10.16)
-		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -626,23 +623,23 @@
 		)
 		(uuid "925a3d53-3eb0-4060-9a91-943b67195805")
 		(property "Sheetname" "LEDs"
-			(at 115.57 112.3184 0)
+			(at 115.57 111.76 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left)
 			)
 		)
 		(property "Sheetfile" "leds.kicad_sch"
-			(at 115.57 123.7746 0)
+			(at 115.57 124.46 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left top)
+				(justify left)
 			)
 		)
 		(pin "DIN" input
@@ -678,7 +675,6 @@
 	(sheet
 		(at 115.57 130.81)
 		(size 20.32 12.7)
-		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -688,23 +684,23 @@
 		)
 		(uuid "99e6e873-2591-4ee0-b907-9b8dc0ee8494")
 		(property "Sheetname" "Display"
-			(at 115.57 130.0984 0)
+			(at 115.57 129.54 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left)
 			)
 		)
 		(property "Sheetfile" "display.kicad_sch"
-			(at 115.57 144.0946 0)
+			(at 115.57 144.78 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left top)
+				(justify left)
 			)
 		)
 		(pin "VCC" input
@@ -751,7 +747,6 @@
 	(sheet
 		(at 161.29 57.15)
 		(size 20.32 86.36)
-		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -761,23 +756,23 @@
 		)
 		(uuid "e3ea4abc-fddf-491c-af63-d0d1ff1c6129")
 		(property "Sheetname" "MCU"
-			(at 161.29 56.4384 0)
+			(at 161.29 55.88 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left)
 			)
 		)
 		(property "Sheetfile" "mcu.kicad_sch"
-			(at 161.29 144.0946 0)
+			(at 161.29 144.78 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left top)
+				(justify left)
 			)
 		)
 		(pin "OLED_SDA" bidirectional
@@ -945,7 +940,6 @@
 	(sheet
 		(at 115.57 72.39)
 		(size 20.32 33.02)
-		(fields_autoplaced yes)
 		(stroke
 			(width 0.1524)
 			(type solid)
@@ -955,23 +949,23 @@
 		)
 		(uuid "ee543acd-84c4-48b0-9de4-fe263104bc88")
 		(property "Sheetname" "Switches"
-			(at 115.57 71.6784 0)
+			(at 115.57 71.12 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left bottom)
+				(justify left)
 			)
 		)
 		(property "Sheetfile" "switches.kicad_sch"
-			(at 115.57 105.9946 0)
+			(at 115.57 106.68 0)
 			(effects
 				(font
 					(face "Lexend")
 					(size 1.27 1.27)
 				)
-				(justify left top)
+				(justify left)
 			)
 		)
 		(pin "K6" input

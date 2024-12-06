@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "Artsey Ergo")
-		(date "2024-12-04")
+		(date "2024-12-07")
 		(rev "v1.0.0")
 		(company "TMShader")
 		(comment 9 "Artsey Ergo")
