@@ -59,7 +59,7 @@ jobs:
           cat <<EOF > output/erc_validation.md
           - **Errors**: $erc_errors
           - **Warnings**: $erc_warnings
-          - **Link**: [HTML Report](output/artsey_ergo-erc.html)
+          - **Link**: [HTML Report](artsey_ergo-erc.html)
           EOF
           cat output/erc_validation.md
 
@@ -70,7 +70,7 @@ jobs:
           cat <<EOF > output/drc_validation.md
           - **Errors**: $drc_errors
           - **Warnings**: $drc_warnings
-          - **Link**: [HTML Report](output/artsey_ergo-drc.html)
+          - **Link**: [HTML Report](artsey_ergo-drc.html)
           EOF
           cat output/drc_validation.md
 
@@ -353,6 +353,12 @@ jobs:
         with:
           path: output
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artsey_ergo
+          path: output
+
       - name: Move artifact files
         run: |
           ls -l
@@ -366,6 +372,8 @@ jobs:
           mkdir documents
           mv output/drc_validation.md ./
           mv output/erc_validation.md ./
+          mv output/artsey_ergo-erc.html ./
+          mv output/artsey_ergo-drc.html ./
           mv output/step/Step/artsey_ergo-3D.step ./artsey_ergo-3D.step
           mv output/report/report/artsey_ergo-report.txt ./artsey_ergo-report.md
           mv output/render_top/artsey_ergo-3D_blender_top.png images/artsey_ergo-3D_blender_top.png
@@ -385,12 +393,6 @@ jobs:
           ls -l
           ls -l export
           find .
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: artsey_ergo
-          path: output
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
