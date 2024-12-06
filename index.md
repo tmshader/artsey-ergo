@@ -83,7 +83,7 @@ All components with Values, References, Sheetpath and Links to the datasheet.
 - [JLCPCB Zip]({{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }})
 - [JLCPCB BOM CSV]({{ "export/artsey_ergo_bom_jlc.csv" | absolute_url | append: cacheBust }})
 - [JLCPCB CPL CSV]({{ "export/artsey_ergo_cpl_jlc.csv" | absolute_url | append: cacheBust }})
--
+
 #### Panelized JLCPCB
 
 - [Panelized JLCPCB Zip]({{ "export/artsey_ergo-panel-JLCPCB.zip" | absolute_url | append: cacheBust }})
