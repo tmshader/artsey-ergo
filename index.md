@@ -26,6 +26,7 @@ layout: home
   - [BOM](#bom)
   - [Downloads](#downloads)
     - [JLCPCB](#jlcpcb)
+    - [Panelized JLCPCB](#panelized-jlcpcb)
     - [3D Step](#3d-step)
 - [Report](#report)
   - [ERC](#erc)
@@ -57,7 +58,9 @@ layout: home
 
 #### Gerber viewer on tracespace.io
 
-[https://tracespace.io/view/?boardUrl={{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }}](https://tracespace.io/view/?boardUrl={{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }})
+[JLCPCB Gerber](https://tracespace.io/view/?boardUrl={{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }})
+
+[Panelized JLCPCB Gerber](https://tracespace.io/view/?boardUrl={{ "export/artsey_ergo-panel-JLCPCB.zip" | absolute_url | append: cacheBust }})
 
 ### Interactive BOM
 
@@ -80,6 +83,12 @@ All components with Values, References, Sheetpath and Links to the datasheet.
 - [JLCPCB Zip]({{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }})
 - [JLCPCB BOM CSV]({{ "export/artsey_ergo_bom_jlc.csv" | absolute_url | append: cacheBust }})
 - [JLCPCB CPL CSV]({{ "export/artsey_ergo_cpl_jlc.csv" | absolute_url | append: cacheBust }})
+-
+#### Panelized JLCPCB
+
+- [Panelized JLCPCB Zip]({{ "export/artsey_ergo-panel-JLCPCB.zip" | absolute_url | append: cacheBust }})
+- [Panelized JLCPCB BOM CSV]({{ "export/artsey_ergo-panel_bom_jlc.csv" | absolute_url | append: cacheBust }})
+- [Panelized JLCPCB CPL CSV]({{ "export/artsey_ergo-panel_cpl_jlc.csv" | absolute_url | append: cacheBust }})
 
 #### 3D Step
 
