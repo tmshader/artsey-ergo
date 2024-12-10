@@ -42,7 +42,7 @@ outputs:
       all_pages: true
       monochrome: false
       output: "%f-%i%I%v-default.%x"
-      title: "Artsey Ergo - Schematic"
+      # title: "Artsey Ergo - Schematic"
   - name: "pdf_sch_print_mono"
     type: "pdf_sch_print"
     dir: "Schematic"
@@ -50,7 +50,7 @@ outputs:
       all_pages: true
       monochrome: true
       output: "%f-%i%I%v-mono.%x"
-      title: "Artsey Ergo - Schematic"
+      # title: "Artsey Ergo - Schematic"
 
   - name: JLCPCB_gerbers
     comment: Gerbers compatible with JLCPCB
