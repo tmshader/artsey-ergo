@@ -31,7 +31,7 @@ outputs:
       converted_output: "%f-%i%I%v.%x"
       eurocircuits_class_target: "3B"
       eurocircuits_reduce_holes: 0
-      template: "full"
+      template: "kibot/custom_full_report.txt"
       do_convert: true
       convert_to: "pdf"
 

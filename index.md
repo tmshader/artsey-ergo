@@ -9,28 +9,15 @@ layout: home
 
 [![Pages Build](https://github.com/tmshader/artsey-ergo/actions/workflows/kibot.yml/badge.svg)](https://github.com/tmshader/artsey-ergo/actions/workflows/kibot.yml)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/tmshader/artsey-ergo?link=https%3A%2F%2Fgithub.com%2Ftmshader%2Fartsey-ergo)
+[![GitHub last commit](https://img.shields.io/github/last-commit/tmshader/artsey-ergo)](https://github.com/tmshader/artsey-ergo)
 
 ## Table of contents
+{: .no_toc}
 
-- [Table of contents](#table-of-contents)
-  - [Render Angled](#render-angled)
-  - [Render Top](#render-top)
-  - [Render Bottom](#render-bottom)
-  - [Schematic](#schematic)
-    - [Monochrome](#monochrome)
-    - [Light](#light)
-  - [Assembly](#assembly)
-    - [Gerber viewer on tracespace.io](#gerber-viewer-on-tracespaceio)
-  - [Interactive BOM](#interactive-bom)
-  - [BOM](#bom)
-  - [Downloads](#downloads)
-    - [JLCPCB](#jlcpcb)
-    - [Panelized JLCPCB](#panelized-jlcpcb)
-    - [3D Step](#3d-step)
-- [Report](#report)
-  - [ERC](#erc)
-  - [DRC](#drc)
+* TOC
+{:toc}
+
+## Renders
 
 ### Render Angled
 
@@ -44,19 +31,19 @@ layout: home
 
 ![Image]({{ "/images/artsey_ergo-3D_blender_bottom.png" | absolute_url | append: cacheBust }})
 
-### Schematic
+## Schematic
 
-#### Monochrome
+### Monochrome
 
 - [Schematic Monochrome PDF]({{ "/documents/artsey_ergo-schematic-mono.pdf" | absolute_url | append: cacheBust }})
 
-#### Light
+### Light
 
 - [Schematic Light PDF]({{ "/documents/artsey_ergo-schematic-default.pdf" | absolute_url | append: cacheBust }})
 
-### Assembly
+## Assembly
 
-#### Gerber viewer on tracespace.io
+### Gerber viewer on tracespace.io
 
 [JLCPCB Gerber](https://tracespace.io/view/?boardUrl={{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }})
 
@@ -76,21 +63,21 @@ All components with Values, References, Sheetpath and Links to the datasheet.
 
 [BOM HTML]({{ "/export/artsey_ergo-bom.html" | absolute_url | append: cacheBust }})
 
-### Downloads
+## Downloads
 
-#### JLCPCB
+### JLCPCB
 
 - [JLCPCB Zip]({{ "export/artsey_ergo-JLCPCB.zip" | absolute_url | append: cacheBust }})
 - [JLCPCB BOM CSV]({{ "export/artsey_ergo_bom_jlc.csv" | absolute_url | append: cacheBust }})
 - [JLCPCB CPL CSV]({{ "export/artsey_ergo_cpl_jlc.csv" | absolute_url | append: cacheBust }})
 
-#### Panelized JLCPCB
+### Panelized JLCPCB
 
 - [Panelized JLCPCB Zip]({{ "export/artsey_ergo-panel-JLCPCB.zip" | absolute_url | append: cacheBust }})
 - [Panelized JLCPCB BOM CSV]({{ "export/artsey_ergo-panel_bom_jlc.csv" | absolute_url | append: cacheBust }})
 - [Panelized JLCPCB CPL CSV]({{ "export/artsey_ergo-panel_cpl_jlc.csv" | absolute_url | append: cacheBust }})
 
-#### 3D Step
+### 3D Step
 
 - [3D Step]({{ "/artsey_ergo-3D.step" | absolute_url | append: cacheBust }})
 
