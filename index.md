@@ -104,4 +104,4 @@ All components with Values, References, Sheetpath and Links to the datasheet.
 
 {% include_relative drc_validation.md %}
 
-{ % include _ relative artsey_ergo-report.md % }
+{% include_relative artsey_ergo-report.md %}

@@ -7,12 +7,14 @@ on:
     paths:
       - '**.kicad_sch'
       - '**.kicad_pcb'
-      # - '.github/workflows/kibot.yml'
+      - 'index.md'
+      - '.github/workflows/kibot.yml'
   pull_request:
     paths:
       - '**.kicad_sch'
       - '**.kicad_pcb'
-      # - '.github/workflows/kibot.yml'
+      - 'index.md'
+      - '.github/workflows/kibot.yml'
   workflow_dispatch:
 
 permissions:
