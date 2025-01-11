@@ -51,19 +51,11 @@
 			>;
 		};
 
-		// utilities { // 5
-		// 	display-name = "Utils";
-		// 	bindings = <
-		// 		&studio_unlock		&bt BT_CLR			&none		&sys_reset
-		// 		&ext_power EP_ON	&bt BT_CLR_ALL		&soft_off	&bootloader
-		// 	>;
-		// };
-
-		rgb { // 5
-			display-name = "RGB";
+		utilities { // 5
+			display-name = "Utils";
 			bindings = <
-				&rgb_ug RGB_TOG		&rgb_ug RGB_EFF		&rgb_ug RGB_HUI		&rgb_ug RGB_SPI
-				&none				&rgb_ug RGB_EFR		&rgb_ug RGB_HUD		&rgb_ug RGB_SPD
+				&studio_unlock		&bt BT_CLR			&none		&sys_reset
+				&ext_power EP_ON	&bt BT_CLR_ALL		&soft_off	&bootloader
 			>;
 		};
 
@@ -75,11 +67,19 @@
 			>;
 		};
 
-		bluetooth { // 6
+		bluetooth { // 7
 			display-name = "BLE";
 			bindings = <
 				&bt BT_SEL 0	&bt BT_SEL 1	&bt BT_SEL 2	&out OUT_BLE
 				&bt BT_SEL 3	&bt BT_SEL 4	&bt BT_SEL 5	&out OUT_USB
+			>;
+		};
+
+		rgb { // 8
+			display-name = "RGB";
+			bindings = <
+				&rgb_ug RGB_TOG		&rgb_ug RGB_EFF		&rgb_ug RGB_HUI		&rgb_ug RGB_SPI
+				&none				&rgb_ug RGB_EFR		&rgb_ug RGB_HUD		&rgb_ug RGB_SPD
 			>;
 		};
 	};
@@ -149,5 +149,6 @@
 		combo_utilities		{ layers = <0 5>;	timeout-ms = <50>; key-positions = <0 2 5>;		bindings = <&tog 5>; };
 		combo_nav			{ layers = <0 6>;	timeout-ms = <50>; key-positions = <1 4 6>;		bindings = <&tog 6>; };
 		combo_bt			{ layers = <0 7>;	timeout-ms = <50>; key-positions = <0 3 4 7>;	bindings = <&tog 7>; };
+		combo_rgb			{ layers = <0 8>;	timeout-ms = <50>; key-positions = <0 1 4 5>;	bindings = <&tog 8>; };
 	};
 };
