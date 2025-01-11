@@ -55,7 +55,7 @@
 			display-name = "Utils";
 			bindings = <
 				&studio_unlock		&bt BT_CLR			&none		&sys_reset
-				&ext_power EP_ON	&bt BT_CLR_ALL		&soft_off	&bootloader
+				&ext_power EP_TOG	&bt BT_CLR_ALL		&soft_off	&bootloader
 			>;
 		};
 
