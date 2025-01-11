@@ -149,6 +149,6 @@
 		combo_utilities		{ layers = <0 5>;	timeout-ms = <50>; key-positions = <0 2 5>;		bindings = <&tog 5>; };
 		combo_nav			{ layers = <0 6>;	timeout-ms = <50>; key-positions = <1 4 6>;		bindings = <&tog 6>; };
 		combo_bt			{ layers = <0 7>;	timeout-ms = <50>; key-positions = <0 3 4 7>;	bindings = <&tog 7>; };
-		combo_rgb			{ layers = <0 8>;	timeout-ms = <50>; key-positions = <0 1 4 5>;	bindings = <&tog 8>; };
+		combo_rgb			{ layers = <0 8>;	timeout-ms = <50>; key-positions = <2 3 4 5>;	bindings = <&tog 8>; };
 	};
 };
